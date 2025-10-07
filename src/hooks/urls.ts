@@ -6,3 +6,5 @@ export const searchEquipmentsURL = () => `${base}/equipments`;
 export const searchMaintenancesURL = () => `${base}/maintenances`;
 export const submitMaintenanceHistoryURL = () => `${base}/maintenanceHistory`;
 export const submitMaintenanceURL = () => `${base}/maintenance`;
+export const getMaintenancesHistoryByIdURL = (maintenancesId: number) =>
+  `${base}/maintenancesHistory/${maintenancesId}`;

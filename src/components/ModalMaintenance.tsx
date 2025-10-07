@@ -9,7 +9,7 @@ import {
 } from "react-bootstrap";
 import SelectionData from "./SelectionData";
 import { ChangeEvent, useEffect, useState } from "react";
-import { MaintenanceHistory } from "../types";
+import { Equipment, MaintenanceHistory } from "../types";
 import { submitMaintenanceHistoryURL } from "../hooks/urls";
 
 type Props = {
@@ -21,6 +21,7 @@ type Props = {
     payload: MaintenanceHistory
   ) => Promise<any>;
   onMaintenanceSaved: () => void;
+  equipmentSelected?: Equipment;
 };
 
 const getFormattedDate = (date: Date) => {
@@ -37,6 +38,7 @@ function ModalMaintenance({
   maintenanceId,
   postMaintenanceData,
   onMaintenanceSaved,
+  equipmentSelected,
 }: Props) {
   const today = getFormattedDate(new Date());
   // const [selectedDate, setSelectedDate] = useState(today);
@@ -118,7 +120,10 @@ function ModalMaintenance({
         <Modal.Body>
           <Container>
             <div className="mb-3">
-              <SelectionData />
+              <SelectionData
+                equipmentName={equipmentSelected?.name ?? ""}
+                equipmentNumber={equipmentSelected?.number ?? ""}
+              />
             </div>
 
             <Row className="justify-content-center mb-3">
@@ -134,7 +139,10 @@ function ModalMaintenance({
                   <option value="Donovan Curci" style={{ fontWeight: "bold" }}>
                     Donovan Curci
                   </option>
-                  <option value="Madeline Brandt" style={{ fontWeight: "bold" }}>
+                  <option
+                    value="Madeline Brandt"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Madeline Brandt
                   </option>
                   <option

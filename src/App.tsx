@@ -10,6 +10,7 @@ import ModalUpdate from "./components/ModalUpdate";
 import { Equipment, Maintenance } from "./types";
 import useHttpsData from "./hooks/useHttpsData";
 import { searchEquipmentsURL, searchMaintenancesURL } from "./hooks/urls";
+import ModalList from "./components/ModalList";
 
 function App() {
   const [equipmentSelected, setEquipmentSelected] = useState<Equipment>();
@@ -34,6 +35,7 @@ function App() {
   const [show, setShow] = useState(false);
   const [showMaintenance, setShowMaintenance] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
+  const [showList, setShowList] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = (equipmentsId: number) => {
@@ -51,11 +53,9 @@ function App() {
     }
 
     if (existMaintenace) {
-      console.log("pasa 1");
       setMaintenanceCreated(true);
       setMaintenanceSelected(existMaintenace);
     } else {
-      console.log("pasa 2");
       setMaintenanceCreated(false);
       setMaintenanceSelected(null);
     }
@@ -66,6 +66,9 @@ function App() {
 
   const handleCloseUpdate = () => setShowUpdate(false);
   const handleShowUpdate = () => setShowUpdate(true);
+
+  const handleCloseList = () => setShowList(false);
+  const handleShowList = () => setShowList(true);
 
   useEffect(() => {
     const url = searchEquipmentsURL();
@@ -142,13 +145,16 @@ function App() {
               <Row className="mb-3">
                 <Col>
                   <Card>
-                    <SelectionData />
+                    <SelectionData
+                      equipmentNumber={equipmentSelected?.number ?? ""}
+                      equipmentName={equipmentSelected?.name ?? ""}
+                    />
                   </Card>
                 </Col>
               </Row>
               <Card>
                 <Row className="justify-content-md-center">
-                  <Col md="auto">
+                  <Col md="auto" className="text-center mb-2 mb-md-0">
                     <span style={{ fontSize: "20px" }}>Odometer:</span>{" "}
                     <span style={{ fontSize: "20px", fontWeight: "bold" }}>
                       {equipmentSelected?.hour}
@@ -156,7 +162,7 @@ function App() {
                   </Col>
                 </Row>
                 <Row className="justify-content-md-center">
-                  <Col md="auto">
+                  <Col md="auto" className="text-center mb-2 mb-md-0">
                     <span style={{ fontSize: "20px" }}>Frequency:</span>{" "}
                     <span style={{ fontSize: "20px", fontWeight: "bold" }}>
                       {maintenanceCreated
@@ -166,7 +172,7 @@ function App() {
                   </Col>
                 </Row>
                 <Row className="justify-content-md-center">
-                  <Col md="auto">
+                  <Col md="auto" className="text-center mb-2 mb-md-0">
                     <span style={{ fontSize: "20px" }}>Last maintenance:</span>{" "}
                     <span style={{ fontSize: "20px", fontWeight: "bold" }}>
                       {maintenanceCreated
@@ -178,7 +184,7 @@ function App() {
                   </Col>
                 </Row>
                 <Row className="justify-content-md-center">
-                  <Col md="auto">
+                  <Col md="auto" className="text-center mb-2 mb-md-0">
                     <span style={{ fontSize: "20px" }}>Date: </span>{" "}
                     <span style={{ fontSize: "20px", fontWeight: "bold" }}>
                       {maintenanceCreated
@@ -202,6 +208,9 @@ function App() {
               onClickUpdate={() => {
                 handleClose(), handleShowUpdate();
               }}
+              onClickList={() => {
+                handleClose(), handleShowList();
+              }}
             />
           </Modal.Footer>
         </Modal>
@@ -212,14 +221,24 @@ function App() {
           handleCloseMaintenance={handleCloseMaintenance}
           postMaintenanceData={submitMaintenanceHistory}
           onMaintenanceSaved={handleRefreshData}
+          equipmentSelected={equipmentSelected}
         />
 
         <ModalUpdate
+          equipmentName={equipmentSelected?.name ?? ""}
+          equipmentNumber={equipmentSelected?.number ?? ""}
           equipmentId={equipmentSelected?.equipmentsId ?? 0}
           onMaintenanceSaved={handleRefreshData}
           postMaintenanceData={submitMaintenance}
           showUpdate={showUpdate}
           handleCloseUpdate={handleCloseUpdate}
+        />
+
+        <ModalList
+          equipmentSelected={equipmentSelected}
+          showList={showList}
+          handleCloseList={handleCloseList}
+          maintenanceId={maintenanceSelected?.maintenancesId ?? 0}
         />
       </div>
     </>

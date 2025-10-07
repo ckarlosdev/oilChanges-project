@@ -3,12 +3,14 @@ import { Button, Col, Container, Row } from "react-bootstrap";
 type Props = {
   onClickMaintenance: () => void;
   onClickUpdate: () => void;
+  onClickList: () => void;
   maintenanceCreated: boolean;
 };
 
 function ModalOptions({
   onClickMaintenance,
   onClickUpdate,
+  onClickList,
   maintenanceCreated,
 }: Props) {
   return (
@@ -28,19 +30,20 @@ function ModalOptions({
               Update
             </Button>
           </Col>
-          {/* <Col xs={12} md="auto" className="text-center mb-2 mb-md-0">
+          <Col xs={12} md="auto" className="text-center mb-2 mb-md-0">
             <Button
+              disabled={!maintenanceCreated}
               style={{
                 width: "130px",
                 height: "50px",
                 fontWeight: "bold",
               }}
-              onClick={onClick}
+              onClick={onClickList}
               variant="primary"
             >
-              Issues
+              Records
             </Button>
-          </Col> */}
+          </Col>
           <Col xs={12} md="auto" className="text-center mb-2 mb-md-0">
             <Button
               disabled={!maintenanceCreated}

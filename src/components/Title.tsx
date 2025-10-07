@@ -18,10 +18,10 @@ function Title({}: Props) {
                 fontWeight: "bold",
                 backgroundColor: "#e9e9e9ff",
                 borderRadius: "10px",
-                fontSize:"40px"
+                fontSize: "30px",
               }}
             >
-              Equipments
+              Maintenance
             </h3>
           </div>
         </Col>

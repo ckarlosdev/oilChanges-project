@@ -10,6 +10,8 @@ type Props = {
   postMaintenanceData: (url: string, payload: Maintenance) => Promise<any>;
   onMaintenanceSaved: () => void;
   equipmentId: number;
+  equipmentName: string;
+  equipmentNumber: string;
 };
 
 function ModalUpdate({
@@ -18,6 +20,8 @@ function ModalUpdate({
   postMaintenanceData,
   onMaintenanceSaved,
   equipmentId,
+  equipmentName,
+  equipmentNumber,
 }: Props) {
   const [maintenance, setMaintenance] = useState<Maintenance>({
     maintenancesId: 0,
@@ -89,7 +93,10 @@ function ModalUpdate({
         <Modal.Body>
           <Container>
             <div className="mb-3">
-              <SelectionData />
+              <SelectionData
+                equipmentName={equipmentName}
+                equipmentNumber={equipmentNumber}
+              />
             </div>
             <Row className="justify-content-center mb-3">
               <Col xs={12} md={12}>
@@ -104,7 +111,10 @@ function ModalUpdate({
                   <option value="Donovan Curci" style={{ fontWeight: "bold" }}>
                     Donovan Curci
                   </option>
-                  <option value="Madeline Brandt" style={{ fontWeight: "bold" }}>
+                  <option
+                    value="Madeline Brandt"
+                    style={{ fontWeight: "bold" }}
+                  >
                     Madeline Brandt
                   </option>
                   <option
@@ -154,9 +164,9 @@ function ModalUpdate({
                   <option value="Hours" style={{ fontWeight: "bold" }}>
                     Hours
                   </option>
-                  <option value="Time" style={{ fontWeight: "bold" }}>
+                  {/* <option value="Time" style={{ fontWeight: "bold" }}>
                     Time
-                  </option>
+                  </option> */}
                 </Form.Select>
               </Col>
             </Row>
